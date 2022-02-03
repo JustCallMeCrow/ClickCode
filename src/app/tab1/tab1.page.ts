@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,7 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  constructor(private http: HttpClient) {}
+  private counter: number;
 
-  constructor() {}
+  ngOnInit() {
+    this.start();
+  }
+  
+  increaseCount():void {
+    this.counter++;
+  }
+  getCounter(): any {
+      return this.http.get('../../assets/counter.json');
+  }
 
+  start() {
+    this.getCounter()
+      .subscribe((data) => this.counter = data.counter);
+  }
 }
